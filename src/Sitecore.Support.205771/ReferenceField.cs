@@ -7,6 +7,7 @@
     using Sitecore.Links;
     public class ReferenceField : CustomField
     {
+        #region Original code
         public ReferenceField(Field innerField) : base(innerField)
         {
             Assert.ArgumentNotNull(innerField, "innerField");
@@ -80,12 +81,18 @@
                 }
             }
         }
+        #endregion
+        #region Modified code
         public override void Relink(ItemLink itemLink, Item newLink)
         {
             Assert.ArgumentNotNull(itemLink, "itemLink");
             Assert.ArgumentNotNull(newLink, "newLink");
-            this.Path = newLink.ID.ToString();
+            if (itemLink.TargetItemID == this.TargetID)
+            {
+                this.Path = newLink.ID.ToString();
+            }
         }
+        #endregion
     }
 }
 
